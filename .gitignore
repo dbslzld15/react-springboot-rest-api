@@ -31,3 +31,7 @@ build/
 
 ### VS Code ###
 .vscode/
+
+/kdt-react-order-ui/.idea/
+/kdt-react-order-ui/node_modules/
+node_modules
