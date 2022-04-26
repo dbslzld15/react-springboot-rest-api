@@ -1,8 +1,9 @@
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.css'
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import {ProductList} from "./components/ProductList";
 import {Summary} from "./components/Summary";
+import axios from "axios";
 
 function App() {
     const [products, setProducts] = useState([
@@ -13,6 +14,18 @@ function App() {
 
     const [items, setItems] = useState([
     ]);
+    const handleAddClicked = id => {
+        const product = products.find(v => v.id == id);
+        const found = items.find(v => v.id == id);
+        const updatedItems =
+            found ? items.map(v => (v.id == id) ? {...v, count: v.count + 1} : v) : [...items, {...product, count: 1}];
+        setItems(updatedItems);
+        console.log(id, "clicked!");
+    }
+    useEffect(() => {
+        axios.get('http://localhost:8080/api/v1/products')
+            .then(v => setProducts(v.data));
+    }, []);
     return (
         <div className="App">
             <div className="container-fluid">
@@ -22,7 +35,7 @@ function App() {
                 <div className="card">
                     <div className="row">
                         <div className="col-md-8 mt-4 d-flex flex-column align-items-start p-3 pt-0">
-                            <ProductList products={products}/>
+                            <ProductList products={products} onAddClick={handleAddClicked}/>
                         </div>
                         <Summary items={items}/>
                     </div>
