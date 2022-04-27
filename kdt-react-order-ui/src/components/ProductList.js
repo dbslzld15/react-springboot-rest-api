@@ -8,7 +8,7 @@ export function ProductList({products = [], onAddClick}) {
             <ul className="list-group products">
                 {
                     products.map(v =>
-                        <li key={v.id} className="list-group-item d-flex mt-3">
+                        <li key={v.productId} className="list-group-item d-flex mt-3">
                             <Product {...v} onAddClick={onAddClick}/>
                         </li>
                     )
